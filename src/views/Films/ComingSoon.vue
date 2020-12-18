@@ -1,6 +1,8 @@
 <template>
     <div id="aaa">
+        <Header></Header>
         <div>
+            
         电影模块下的即将上映</div>
         <ul>
             <li>{{aa}}</li>
@@ -14,6 +16,8 @@
 <script>
 
 import uri from "@/config/uri";
+import Header from "@/components/Navigation/Header";
+
 export default { 
    
     data(){
@@ -31,12 +35,16 @@ export default {
         // console.log(ret.data.films[0]);
         this.aa=ret.data.films[0].filmId
         this.ab=ret.data.films[0].name
-        console.log(this.ab);
+        
         this.ac=ret.data.films[0].poster
         this.ad=ret.data.films[0].actors
 
 
        
+    },
+     components: {
+        // Footer,
+        Header
     },
 };
 </script>

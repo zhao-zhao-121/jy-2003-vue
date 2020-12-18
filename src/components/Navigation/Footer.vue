@@ -40,7 +40,11 @@ export default {
         };
     },
     created() {
-        this.active = this.url.indexOf(this.$route.path);
+        if(this.$route.path=='/films/comingsoon'){
+            this.active=0;
+        }else{
+        
+        this.active = this.url.indexOf(this.$route.path);}
     },
     methods: {
         changeTab(index) {

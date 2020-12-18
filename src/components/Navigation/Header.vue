@@ -19,10 +19,14 @@ export default {
   data() {
     return {
       activeName: '0',
-            url: ["/films/nowplaying", "/films/ComingSoon"],
+            url: ["/films/nowplaying", "/films/comingsoon"],
 
     };
   },
+ created() {
+        this.activeName = this.url.indexOf(this.$route.path);
+        // console.log(this.$route.path);
+    },
   methods:{
     onClick:function(index) {
             this.$router.push(this.url[index]);
