@@ -1,28 +1,18 @@
 <template>
     <div>
-        电影模块
-        <router-view></router-view>
-         <button @click="hhh()">点击去正在热映页面</button>
-        <button @click="zzz()">点击去即将上映页面</button>
+        <Header></Header>
+   <router-view></router-view>
+
+       
+       
     </div>
 </template>
 <script>
-export default {
-    methods:{
-        hhh:function(){
-      this.$router.push({
-        path:'/films/nowplaying',
-      
-      })
-            
+    import Header from "@/components/Navigation/Header";
 
-    },
-     zzz:function(){
-      this.$router.push({
-        path:'/films/comingsoon',
-       
-      })
+export default {
+      components: {
+        Header
     },
     }
-}
 </script>

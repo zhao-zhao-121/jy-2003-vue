@@ -1,6 +1,6 @@
 <template>
     <div>
-        <van-tabbar v-model="active" @change="changeTab">
+        <van-tabbar v-model="active" @change="changeTab" placeholder>
             <van-tabbar-item><van-icon
                     class="iconfont icon-dianying"
                     slot="icon"
