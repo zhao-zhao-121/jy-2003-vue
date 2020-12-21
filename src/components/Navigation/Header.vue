@@ -32,7 +32,6 @@ export default {
             let top = document.documentElement.scrollTop;
             if (top > 100) {
                 this.show = true;
-                console.log(1);
             } else {
                 this.show = false;
             }

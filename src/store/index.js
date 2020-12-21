@@ -5,11 +5,18 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
+    
+    isShowFooter: true,
+},
+mutations: {
+    
+    isShowFooterNav(state, val) {
+        state.isShowFooter = val;
+    },
+},
+actions: {},
+getters: {
+  
+},
+modules: {},
 })

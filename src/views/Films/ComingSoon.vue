@@ -52,6 +52,7 @@ export default {
             bs: null,
             height: 0,
             y: 0,
+            c:1,
             
         };
     },
@@ -120,10 +121,12 @@ export default {
         return "星期"+ w + " " + m +"月" + d + "日"
     },
      getData(cb = null) {
+       if( this.pageNum>this.c) return;
             this.$http
                 .get(uri.getComingSoon + `?pageNum=${this.pageNum}`)
                 .then((ret) => {
-                    if (this.pageNum <= Math.ceil(ret.data.total / 10)) {
+                    this.c= Math.ceil(ret.data.total / 10);
+                    if (this.pageNum <= this.c) {
                         this.pageNum++;
                         this.list = [...this.list, ...ret.data.films];
                     }
@@ -133,6 +136,7 @@ export default {
                         cb();
                     }
                 });
+         
         },
         gotoDetail(filmId) {
             this.$router.push("/film/" + filmId);

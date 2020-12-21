@@ -2,7 +2,7 @@
   <div id="app">
     <router-view/>
     
-    <Footer></Footer>
+    <Footer v-show="$store.state.isShowFooter"></Footer>
   </div>
 </template>
 <script>
@@ -16,6 +16,11 @@
         Footer,
         // Header
     },
+    data(){
+      return{
+        isShowFooter :false,
+      };
+    }
     }
 
 </script>
