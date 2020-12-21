@@ -80,9 +80,9 @@ export default {
             this.$http
                 .get(uri.getNowPlaying + `?pageNum=${this.pageNum}`)
                 .then((ret) => {
-                    if (this.pageNum < Math.ceil(ret.data.total / 10)) {
-                        this.pageNum++;
+                    if (this.pageNum <= Math.ceil(ret.data.total / 10)) {
                         this.list = [...ret.data.films, ...this.list];
+                        this.pageNum++;
                     }
                     if (cb == null) {
                         this.isLoading = false;

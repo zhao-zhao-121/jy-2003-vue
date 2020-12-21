@@ -1,9 +1,11 @@
 <template>
-    <div id="container">
+    <div class="wrapper" :style="{ height: height + 'px' }">
+        <div>
+
         <van-loading size="24px" type="spinner" vertical v-show="isLoading"
             >加载中...</van-loading
         >
-        <van-card v-for="item in list" :key="item.filmId">
+        <van-card v-for="item in list" :key="item.filmId"  @click="gotoDetail(item.filmId)">
             <template #title>
                 <span style="fontSize:16px;color:#191a1b"
                     >{{ item.name }} <span class="item">{{item.filmType.name}}</span></span
@@ -14,20 +16,21 @@
             </template>
             <template #desc>
                 <div>
-                   <div style="height:14px;line-height:14px"> <div
+                   <div style="height:14px;line-height:14px"></div>
+                   
+                    <div style="fontSize:13px;margin-top: 4px;">主演：{{ item.actors | parserActors }}
+                         <div
                                 class="comingSoonFilm-buy"
                                 style="float: right;"
                             >
                                 预购
-                            </div></div>
-                   
-                    <div style="fontSize:13px;margin-top: 4px;">主演：{{ item.actors | parserActors }}
-                        
+                            </div>
                     </div>
                     <div style="fontSize:13px">上映日期：{{datehe(item.premiereAt)}}</div>
                 </div>
             </template>
         </van-card>
+        </div>
     </div>
 </template>
 
@@ -36,6 +39,8 @@
 import uri from "@/config/uri";
 import Vue from "vue";
 import { Loading, Card } from "vant";
+import BScroll from "better-scroll";
+
 Vue.use(Loading);
 Vue.use(Card);
 export default {
@@ -44,15 +49,29 @@ export default {
             list: [],
             pageNum: 1,
             isLoading: true,
+            bs: null,
+            height: 0,
+            y: 0,
             
         };
     },
     created() {
-        this.$http.get(uri.getComingSoon).then((ret) => {
-            console.log(ret.data.films);
-            this.list = ret.data.films;
-         
-            this.isLoading = false;
+              this.getData();
+
+    },
+    mounted(){
+        this.height = document.documentElement.clientHeight-94;
+    },
+    updated(){
+        this.bs = new BScroll('.wrapper',{
+            click:true,
+            startY:this.y,
+            pullUpLoad:true
+        });
+        this.bs.on("pullingUp", () => {
+            this.getData();
+            this.y = this.bs.y;
+            this.bs.finishPullUp();
         });
     },
     filters: {
@@ -99,7 +118,25 @@ export default {
         }
         // console.log(w)
         return "星期"+ w + " " + m +"月" + d + "日"
-    }
+    },
+     getData(cb = null) {
+            this.$http
+                .get(uri.getComingSoon + `?pageNum=${this.pageNum}`)
+                .then((ret) => {
+                    if (this.pageNum <= Math.ceil(ret.data.total / 10)) {
+                        this.pageNum++;
+                        this.list = [...this.list, ...ret.data.films];
+                    }
+                    if (cb == null) {
+                        this.isLoading = false;
+                    } else {
+                        cb();
+                    }
+                });
+        },
+        gotoDetail(filmId) {
+            this.$router.push("/film/" + filmId);
+        },
 
     }
 };
@@ -107,7 +144,7 @@ export default {
 
 <style lang="scss" scoped>
 img {
-    width: 66px;
+    width: 90%;
     height: 90px;
     border-radius: 0;
 }
@@ -131,5 +168,9 @@ img {
     text-align: center;
     border-radius: 2px;
     position: relative;
+}
+.van-card__thumb {
+    margin-right: 0px;
+    width: 80px;
 }
 </style>
