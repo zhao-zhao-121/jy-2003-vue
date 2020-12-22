@@ -25,7 +25,7 @@ export default {
   },
   created() {
     this.activeName = this.url.indexOf(this.$route.path);
-    // console.log(this.$route.path);
+    console.log(this.$route.path);
   },
    mounted() {
         window.addEventListener("scroll", () => {

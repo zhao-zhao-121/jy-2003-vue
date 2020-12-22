@@ -9,10 +9,14 @@
 </template>
 <script>
     import Header from "@/components/Navigation/Header";
+    
 
 export default {
       components: {
         Header
     },
+    created() {
+    console.log(this.$route.path);
+  },
     }
 </script>

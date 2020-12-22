@@ -61,6 +61,7 @@ export default {
     
     created() {
         this.getData();
+ 
     },
     filters: {
         parserActors(actors) {
